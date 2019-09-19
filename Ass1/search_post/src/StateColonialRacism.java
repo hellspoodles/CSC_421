@@ -7,6 +7,7 @@ public class StateColonialRacism
     boat = 0  : boat is on the right side
     boat = 1  : boat is on the left side
     */
+    //boop
     
     public StateColonialRacism(int[] puzzleArray) { 
         this.puzzleArray = puzzleArray; 
