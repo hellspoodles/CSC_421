@@ -14,6 +14,20 @@ public class ProblemColonialRacism extends Problem {
         }
         return equalsReturn;
 	}
+
+	boolean validState(Object state)
+	{
+		StateColonialRacism che = (StateColonialRacism) state;
+		if(che.puzzleArray[0] < che.puzzleArray[1] && che.puzzleArray[0] > 0)
+		{
+			return false;
+		}
+		if(che.puzzleArray[3] < che.puzzleArray[4] && che.puzzleArray[3] > 0)
+		{
+			return false;
+		}
+		return true;
+	}
   
     Set<Object> getSuccessors(Object state) {
     	
@@ -22,33 +36,145 @@ public class ProblemColonialRacism extends Problem {
 
 		StateColonialRacism ss; //successor state
 		
+		///Puzzle arry def
+		///  0    1   2    3    4
+		///[good,bad,boat,good,bad]
+		//boat = 0  : boat is on the right side
+		//boat = 1  : boat is on the left side
+		///
 
 		//cannot have more reavers on one side or else the browncoats get eaten
-		if(s.puzzleArray[2] == 1)
+		if(s.puzzleArray[2] == 1)	//if boat is on left side...
 		{
+						//try sending one to each side.
+			//reaver
+			ss = new StateColonialRacism(s);
+			if(s.puzzleArray[1] > 0)
+			{
+				ss.puzzleArray[1] = ss.puzzleArray[1] - 1;
+				ss.puzzleArray[2] = 0;
+				ss.puzzleArray[4] = ss.puzzleArray[4] + 1;
+				if(validState(ss))
+					set.add(ss);
+			}
+
+			//browncoat
+			ss = new StateColonialRacism(s);
+			if(s.puzzleArray[0] > 0)
+			{
+				ss.puzzleArray[0] = ss.puzzleArray[0] - 1;
+				ss.puzzleArray[2] = 0;
+				ss.puzzleArray[3] = ss.puzzleArray[3] + 1;
+				if(validState(ss))
+					set.add(ss);
+			}
+			//try sending two to each side
+			// reaver browncoat
+			ss = new StateColonialRacism(s);
+			if(s.puzzleArray[0] > 0 && s.puzzleArray[1] > 0)
+			{
+				ss.puzzleArray[0] = ss.puzzleArray[0] - 1;
+				ss.puzzleArray[1] = ss.puzzleArray[1] - 1;
+				ss.puzzleArray[2] = 0;
+				ss.puzzleArray[3] = ss.puzzleArray[3] + 1;
+				ss.puzzleArray[4] = ss.puzzleArray[4] + 1;
+				if(validState(ss))
+					set.add(ss);
+			}
+			// reaver reaver
+			ss = new StateColonialRacism(s);
+			if(s.puzzleArray[1] > 1)
+			{
+				ss.puzzleArray[1] = ss.puzzleArray[1] - 2;
+				ss.puzzleArray[2] = 0;
+				ss.puzzleArray[4] = ss.puzzleArray[4] + 2;
+				if(validState(ss))
+					set.add(ss);
+			}
+			// browncoat browncoat
+			ss = new StateColonialRacism(s);
+			if(s.puzzleArray[0] > 1)
+			{
+				ss.puzzleArray[0] = ss.puzzleArray[0] - 2;
+				ss.puzzleArray[2] = 0;
+				ss.puzzleArray[3] = ss.puzzleArray[3] + 2;
+				if(validState(ss))
+					set.add(ss);
+			}
+		} else {//if boat is on right side...
 			//try sending one to each side.
 			//reaver
 			ss = new StateColonialRacism(s);
+			if(s.puzzleArray[4] >= 1)
+			{
+				ss.puzzleArray[4] = ss.puzzleArray[4] - 1;
+				ss.puzzleArray[2] = 1;
+				ss.puzzleArray[1] = ss.puzzleArray[1] + 1;
+				if(validState(ss))
+					set.add(ss);
+			}
+
 			//browncoat
+			ss = new StateColonialRacism(s);
+			if(s.puzzleArray[3] >= 1)
+			{
+				ss.puzzleArray[3] = ss.puzzleArray[3] - 1;
+				ss.puzzleArray[2] = 1;
+				ss.puzzleArray[0] = ss.puzzleArray[0] + 1;
+				if(validState(ss))
+					set.add(ss);
+			}
 			//try sending two to each side
-		} else {
-
+			// reaver browncoat
+			ss = new StateColonialRacism(s);
+			if(s.puzzleArray[3] >= 1 && s.puzzleArray[4] >= 1)
+			{
+				ss.puzzleArray[3] = ss.puzzleArray[3] - 1;
+				ss.puzzleArray[4] = ss.puzzleArray[4] - 1;
+				ss.puzzleArray[2] = 1;
+				ss.puzzleArray[0] = ss.puzzleArray[0] + 1;
+				ss.puzzleArray[1] = ss.puzzleArray[1] + 1;
+				if(validState(ss))
+					set.add(ss);
+			}
+			// reaver reaver
+			ss = new StateColonialRacism(s);
+			if(s.puzzleArray[4] >= 2)
+			{
+				ss.puzzleArray[4] = ss.puzzleArray[4] - 2;
+				ss.puzzleArray[2] = 1;
+				ss.puzzleArray[1] = ss.puzzleArray[1] + 2;
+				if(validState(ss))
+					set.add(ss);
+			}
+			// browncoat browncoat
+			ss = new StateColonialRacism(s);
+			if(s.puzzleArray[3] >= 2)
+			{
+				ss.puzzleArray[3] = ss.puzzleArray[3] - 2;
+				ss.puzzleArray[2] = 1;
+				ss.puzzleArray[0] = ss.puzzleArray[0] + 2;
+				if(validState(ss))
+					set.add(ss);
+			}
 		}
-
-
+		//System.out.println(set.toString());
         return set;
 	}
 	
 	double step_cost(Object fromState, Object toState) { return 1; }
 
-	public double h(Object state) { return 0; }
+	public double h(Object state) { 
+		StateColonialRacism s = (StateColonialRacism) state;
+		return s.puzzleArray[0] + s.puzzleArray[1];
+	}
 
 
 	public static void main(String[] args) throws Exception {
 		ProblemColonialRacism problem = new ProblemColonialRacism();
-		int[] puzzleArray = {0,0,0,1,3,3};
+		int[] puzzleArray = {0,0,0,3,3};
 		/*
-		Of form: {cabbage, goat, wolf, boat, cabbage, goat, wolf}
+		Of form: [good,bad,boat,good,bad]
 		boat = 0  : boat is on the right side
 		boat = 1  : boat is on the left side
 		*/
