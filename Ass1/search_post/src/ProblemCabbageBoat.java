@@ -122,7 +122,7 @@ public class ProblemCabbageBoat extends Problem {
 	public double h(Object state) { //huristic funtion
 		//the more items on the left the better
 		StateCabbageBoat s = (StateCabbageBoat) state;
-		return s.puzzleArray[0] + s.puzzleArray[1] + s.puzzleArray[2];
+		return 3 - (s.puzzleArray[0] + s.puzzleArray[1] + s.puzzleArray[2]);
 	 }
 
 

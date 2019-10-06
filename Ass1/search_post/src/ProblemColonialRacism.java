@@ -166,7 +166,7 @@ public class ProblemColonialRacism extends Problem {
 
 	public double h(Object state) { 
 		StateColonialRacism s = (StateColonialRacism) state;
-		return s.puzzleArray[0] + s.puzzleArray[1];
+		return  6 - (s.puzzleArray[0] + s.puzzleArray[1]);
 	}
 
 
