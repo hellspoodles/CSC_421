@@ -226,9 +226,13 @@ public class Search {
 			solution.push(node.state);
 			node = node.parent_node;
 		} while(node != null);
-		
-		while(!solution.isEmpty())
+		/*
+
+		while(!solution.isEmpty() && counter != 20)
+		{
 			solution_str += solution.pop() + " ";
+			counter++;
+		}*/
 		
 		return solution_str;
 	}
