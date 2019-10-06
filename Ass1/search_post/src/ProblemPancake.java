@@ -45,7 +45,18 @@ public class ProblemPancake extends Problem {
 
 	double step_cost(Object fromState, Object toState) {return 1;}
 
-	public double h(Object state) {return 0;}
+	public double h(Object state) {
+		int huristic = 0;
+		StatePancake p = (StatePancake) state;
+		for(int i = 1; i < p.pArray.length; i++)
+		{
+			if(p.pArray[i] > p.pArray[i-1])
+			{
+				huristic--;
+			}
+		}
+		return huristic;
+	}
 
 	public static void main(String[] args) throws Exception {
 		ProblemPancake problem = new ProblemPancake();
