@@ -2,20 +2,30 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ProblemPancake extends Problem {
-
-	static int size;
-	static void dumb(int x) {
-		size = x;
-	}
 		
 	boolean goal_test(Object state) {
-		boolean equalsReturn = true;
 		StatePancake pState = (StatePancake) state;
-       		for(int i = 0; i < size; i++) {
-            		if(i != pState.pArray[i])
-                		equalsReturn = false;
-        	}
-        	return equalsReturn;
+		for(int i = 0; i < pState.pArray.length; i++) {
+				if(i != pState.pArray[i])
+					return false;
+		}
+        return true;
+	}
+
+	int[] flipStack(int flipLocation, int[] pancakeStack)
+	{
+		int size = pancakeStack.length;
+		//flip the first "flipLocation" values
+		int[] newstack = new int[size];
+		for(int i = 0; i < size; i++)
+		{
+			newstack[i] = pancakeStack[i];
+		}
+		for(int i = 0; i <= flipLocation; i++)
+		{
+			newstack[i] = pancakeStack[flipLocation - i];
+		}
+		return newstack;
 	}
 
 	Set<Object> getSuccessors(Object state) {
@@ -24,8 +34,12 @@ public class ProblemPancake extends Problem {
 		StatePancake p = (StatePancake) state;
 		StatePancake pp; // successor pancake 
 	
-		//todo 	
-
+		for(int i = 0; i < p.pArray.length; i++)
+		{
+			pp = new StatePancake(p);
+			pp.pArray = flipStack(i, pp.pArray);
+			set.add(pp);
+		}
 		return set;
 	}
 
@@ -36,8 +50,6 @@ public class ProblemPancake extends Problem {
 	public static void main(String[] args) throws Exception {
 		ProblemPancake problem = new ProblemPancake();
 		int [] pArray = {1, 0, 3, 5, 2, 4};
-		int size = pArray.length;
-		dumb(size);
 
 
 		problem.initialState = new StatePancake(pArray);
