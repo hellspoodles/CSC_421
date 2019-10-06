@@ -1,12 +1,12 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class ProblemColonialRacism extends Problem {
+public class ProblemMissionaryCannibal extends Problem {
     
 	boolean goal_test(Object state) {
 		int[] acceptState = {3,3,1,0,0};
 		boolean equalsReturn = true;
-		StateColonialRacism puzzleState = (StateColonialRacism) state;
+		StateMissionaryCannibal puzzleState = (StateMissionaryCannibal) state;
         for(int i = 0; i < acceptState.length; i++)
         {
             if(acceptState[i] != puzzleState.puzzleArray[i])
@@ -17,7 +17,7 @@ public class ProblemColonialRacism extends Problem {
 
 	boolean validState(Object state)
 	{
-		StateColonialRacism che = (StateColonialRacism) state;
+		StateMissionaryCannibal che = (StateMissionaryCannibal) state;
 		if(che.puzzleArray[0] < che.puzzleArray[1] && che.puzzleArray[0] > 0)
 		{
 			return false;
@@ -32,9 +32,9 @@ public class ProblemColonialRacism extends Problem {
     Set<Object> getSuccessors(Object state) {
     	
         Set<Object> set = new HashSet<Object>();
-		StateColonialRacism s = (StateColonialRacism) state;
+		StateMissionaryCannibal s = (StateMissionaryCannibal) state;
 
-		StateColonialRacism ss; //successor state
+		StateMissionaryCannibal ss; //successor state
 		
 		///Puzzle arry def
 		///  0    1   2    3    4
@@ -48,7 +48,7 @@ public class ProblemColonialRacism extends Problem {
 		{
 						//try sending one to each side.
 			//reaver
-			ss = new StateColonialRacism(s);
+			ss = new StateMissionaryCannibal(s);
 			if(s.puzzleArray[1] > 0)
 			{
 				ss.puzzleArray[1] = ss.puzzleArray[1] - 1;
@@ -59,7 +59,7 @@ public class ProblemColonialRacism extends Problem {
 			}
 
 			//browncoat
-			ss = new StateColonialRacism(s);
+			ss = new StateMissionaryCannibal(s);
 			if(s.puzzleArray[0] > 0)
 			{
 				ss.puzzleArray[0] = ss.puzzleArray[0] - 1;
@@ -70,7 +70,7 @@ public class ProblemColonialRacism extends Problem {
 			}
 			//try sending two to each side
 			// reaver browncoat
-			ss = new StateColonialRacism(s);
+			ss = new StateMissionaryCannibal(s);
 			if(s.puzzleArray[0] > 0 && s.puzzleArray[1] > 0)
 			{
 				ss.puzzleArray[0] = ss.puzzleArray[0] - 1;
@@ -82,7 +82,7 @@ public class ProblemColonialRacism extends Problem {
 					set.add(ss);
 			}
 			// reaver reaver
-			ss = new StateColonialRacism(s);
+			ss = new StateMissionaryCannibal(s);
 			if(s.puzzleArray[1] > 1)
 			{
 				ss.puzzleArray[1] = ss.puzzleArray[1] - 2;
@@ -92,7 +92,7 @@ public class ProblemColonialRacism extends Problem {
 					set.add(ss);
 			}
 			// browncoat browncoat
-			ss = new StateColonialRacism(s);
+			ss = new StateMissionaryCannibal(s);
 			if(s.puzzleArray[0] > 1)
 			{
 				ss.puzzleArray[0] = ss.puzzleArray[0] - 2;
@@ -104,7 +104,7 @@ public class ProblemColonialRacism extends Problem {
 		} else {//if boat is on right side...
 			//try sending one to each side.
 			//reaver
-			ss = new StateColonialRacism(s);
+			ss = new StateMissionaryCannibal(s);
 			if(s.puzzleArray[4] >= 1)
 			{
 				ss.puzzleArray[4] = ss.puzzleArray[4] - 1;
@@ -115,7 +115,7 @@ public class ProblemColonialRacism extends Problem {
 			}
 
 			//browncoat
-			ss = new StateColonialRacism(s);
+			ss = new StateMissionaryCannibal(s);
 			if(s.puzzleArray[3] >= 1)
 			{
 				ss.puzzleArray[3] = ss.puzzleArray[3] - 1;
@@ -126,7 +126,7 @@ public class ProblemColonialRacism extends Problem {
 			}
 			//try sending two to each side
 			// reaver browncoat
-			ss = new StateColonialRacism(s);
+			ss = new StateMissionaryCannibal(s);
 			if(s.puzzleArray[3] >= 1 && s.puzzleArray[4] >= 1)
 			{
 				ss.puzzleArray[3] = ss.puzzleArray[3] - 1;
@@ -138,7 +138,7 @@ public class ProblemColonialRacism extends Problem {
 					set.add(ss);
 			}
 			// reaver reaver
-			ss = new StateColonialRacism(s);
+			ss = new StateMissionaryCannibal(s);
 			if(s.puzzleArray[4] >= 2)
 			{
 				ss.puzzleArray[4] = ss.puzzleArray[4] - 2;
@@ -148,7 +148,7 @@ public class ProblemColonialRacism extends Problem {
 					set.add(ss);
 			}
 			// browncoat browncoat
-			ss = new StateColonialRacism(s);
+			ss = new StateMissionaryCannibal(s);
 			if(s.puzzleArray[3] >= 2)
 			{
 				ss.puzzleArray[3] = ss.puzzleArray[3] - 2;
@@ -165,20 +165,20 @@ public class ProblemColonialRacism extends Problem {
 	double step_cost(Object fromState, Object toState) { return 1; }
 
 	public double h(Object state) { 
-		StateColonialRacism s = (StateColonialRacism) state;
+		StateMissionaryCannibal s = (StateMissionaryCannibal) state;
 		return  6 - (s.puzzleArray[0] + s.puzzleArray[1]);
 	}
 
 
 	public static void main(String[] args) throws Exception {
-		ProblemColonialRacism problem = new ProblemColonialRacism();
+		ProblemMissionaryCannibal problem = new ProblemMissionaryCannibal();
 		int[] puzzleArray = {0,0,0,3,3};
 		/*
 		Of form: [good,bad,boat,good,bad]
 		boat = 0  : boat is on the right side
 		boat = 1  : boat is on the left side
 		*/
-		problem.initialState = new StateColonialRacism(puzzleArray); 
+		problem.initialState = new StateMissionaryCannibal(puzzleArray); 
 		
 		Search search  = new Search(problem);
 		

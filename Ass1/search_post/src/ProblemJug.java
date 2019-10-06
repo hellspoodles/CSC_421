@@ -6,11 +6,12 @@ public class ProblemJug extends Problem {
 
 	boolean goal_test(Object state) {
 		StateJug jState = (StateJug) state;
-		for (int x: jState.jArray) {
-			if (Integer.valueOf(x) != 1)
-				return false;
+		for(int i = 0; i < jState.jArray.length; i++)
+		{
+			if(jState.jArray[i] == 1)
+				return true;
 		}
-		return true;
+		return false;
 	}
 
 
@@ -18,41 +19,86 @@ public class ProblemJug extends Problem {
 		Set<Object> set = new HashSet<Object>();
 
 		StateJug j = (StateJug) state;
-		StateJug jj; 
+		StateJug jj;//abrahms. or the A1 Abrhams Main Battle Tank. <3
+		//[12,8,3]
+		//fill each jug
+		jj = new StateJug(j);
+		jj.jArray[0] = 12;
+		set.add(jj);
+		jj = new StateJug(j);
+		jj.jArray[1] = 8;
+		set.add(jj);
+		jj = new StateJug(j);
+		jj.jArray[2] = 3;
+		set.add(jj);
+		//empty each jug
+		jj = new StateJug(j);
+		jj.jArray[0] = 0;
+		set.add(jj);
+		jj = new StateJug(j);
+		jj.jArray[1] = 0;
+		set.add(jj);
+		jj = new StateJug(j);
+		jj.jArray[2] = 0;
+		set.add(jj);
+		//pour each jug into each other.
+		int buff,a,b,amax = 0;	//how much can be filled into the destination
 
-		int x = j.jArray[0]; //12
-		int y = j.jArray[1]; //8 
-		int z = j.jArray[2]; //3
+		// 12 < 8
+		jj = new StateJug(j); a = 0; b = 1; amax = 12;
+		buff = amax - jj.jArray[a];
+		if(buff <= jj.jArray[b]){jj.jArray[a] = amax; jj.jArray[b] -= buff;}
+		else{jj.jArray[a] += jj.jArray[b]; jj.jArray[b] = 0;}
+		set.add(jj);
+		// 12 < 3
+		jj = new StateJug(j); a = 0; b = 2; amax = 12;
+		buff = amax - jj.jArray[a];
+		if(buff <= jj.jArray[b]){jj.jArray[a] = amax; jj.jArray[b] -= buff;}
+		else{jj.jArray[a] += jj.jArray[b]; jj.jArray[b] = 0;}
+		set.add(jj);
 
-		 // non-programmatic solution. sorry sylvia
-		
-		 //x=12, y=0, z=0 --fill a
-		 //x=4, y=8, z=0 -- a>b
-	         //x=4, y=5, z=3 -- b>c
-	 	 //x=7, y=5, z=0 -- c>a
-		 //x=7, y=0, z=0 (empty b)
-		 //x=0, y=7, z=0 -- a>b
-		 //x=0, y=4, z=3 -- b>c
-		 //x=3, y=4, z=0 -- c>a
-		 //x=3, y=1, z=3 -- (b>c)
-		 
+		//8 < 12
+		jj = new StateJug(j); a = 1; b = 0; amax = 8;
+		buff = amax - jj.jArray[a];
+		if(buff <= jj.jArray[b]){jj.jArray[a] = amax; jj.jArray[b] -= buff;}
+		else{jj.jArray[a] += jj.jArray[b]; jj.jArray[b] = 0;}
+		set.add(jj);
 
-		return null;
-		
+		//8 < 3
+		jj = new StateJug(j); a = 1; b = 2; amax = 8;
+		buff = amax - jj.jArray[a];
+		if(buff <= jj.jArray[b]){jj.jArray[a] = amax; jj.jArray[b] -= buff;}
+		else{jj.jArray[a] += jj.jArray[b]; jj.jArray[b] = 0;}
+		set.add(jj);
 
+		//3 < 12
+		jj = new StateJug(j); a = 2; b = 0; amax = 3;
+		buff = amax - jj.jArray[a];
+		if(buff <= jj.jArray[b]){jj.jArray[a] = amax; jj.jArray[b] -= buff;}
+		else{jj.jArray[a] += jj.jArray[b]; jj.jArray[b] = 0;}
+		set.add(jj);
+
+		//3 < 8
+		jj = new StateJug(j); a = 2; b = 1; amax = 3;
+		buff = amax - jj.jArray[a];
+		if(buff <= jj.jArray[b]){jj.jArray[a] = amax; jj.jArray[b] -= buff;}
+		else{jj.jArray[a] += jj.jArray[b]; jj.jArray[b] = 0;}
+		set.add(jj);
+
+
+		//System.out.println(j.toString() + " => " + set.toString());
+		return set;
 	}
 
 
 	double step_cost(Object fromState, Object toState) {return 1;}
 
-	public double h(Object state) {
-		return null;
-	}
+	public double h(Object state) {return 0;}
 
-	public static void Main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 	
 		ProblemJug problem = new ProblemJug();
-		int [] jArray = {12, 8, 3};
+		int [] jArray = {0, 0, 0};
 
 		problem.initialState = new StateJug(jArray);
 		Search search = new Search(problem);
@@ -72,7 +118,7 @@ public class ProblemJug extends Problem {
 		System.out.println("GreedyBestGraphSearch:\t\t" + search.GreedyBestFirstGraphSearch());
 		System.out.println("AstarGraphSearch:\t\t" + search.AstarGraphSearch());
 		
-		System.out.println("\n\nIterativeDeepening----------------------");
+		//System.out.println("\n\nIterativeDeepening----------------------");
 		//System.out.println("IterativeDeepeningTreeSearch:\t" + search.IterativeDeepeningTreeSearch());
 		System.out.println("IterativeDeepeningGraphSearch:\t" + search.IterativeDeepeningGraphSearch());	
 

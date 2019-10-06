@@ -1,4 +1,4 @@
-public class StateColonialRacism
+public class StateMissionaryCannibal
 {    
 	int N;
     int[] puzzleArray;
@@ -9,14 +9,14 @@ public class StateColonialRacism
     */
     //boop
     
-    public StateColonialRacism(int[] puzzleArray) { 
+    public StateMissionaryCannibal(int[] puzzleArray) { 
         this.puzzleArray = puzzleArray; 
     	N = puzzleArray.length;
     }
     
     //It has to be a copy of values not reference because we will 
     //create many states and don't want to overwrite the same array.
-    public StateColonialRacism(StateColonialRacism state) {
+    public StateMissionaryCannibal(StateMissionaryCannibal state) {
     	N = state.N;
     	puzzleArray = new int[N];
     	
@@ -25,7 +25,7 @@ public class StateColonialRacism
     }
     
     public boolean equals(Object o) {
-        return java.util.Arrays.equals( puzzleArray, ((StateColonialRacism) o).puzzleArray );
+        return java.util.Arrays.equals( puzzleArray, ((StateMissionaryCannibal) o).puzzleArray );
     }
     
     public int hashCode() {

@@ -1,16 +1,16 @@
 public class StateJug {
 
-int N;
-int[] jArray;
+    int N;
+    int[] jArray;
 
 
-public StateJug (int[] jArray) { 
+    public StateJug (int[] jArray) { 
         this.jArray = jArray; 
     	N = jArray.length;
     }
 
 
-public StateJug(StateJug state) {
+    public StateJug(StateJug state) {
     	N = state.N;
     	jArray = new int[N];
     	
