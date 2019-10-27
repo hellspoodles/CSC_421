@@ -45,8 +45,8 @@ public class GameNim extends Game {
        	successor_state.player = (state.player == 0 ? 1 : 0);
 
 //just terrible lol
-  
-     	if (cstate.coins > 3) {
+
+     	if (cstate.coins > 8) {
           	successor_state.coins-=1;
           	successors.add(successor_state);
 
@@ -55,6 +55,45 @@ public class GameNim extends Game {
        		successor_state2.coins -=2;
        		successors.add(successor_state2);
 
+       		StateNim successor_state3;
+       		successor_state3 = new StateNim(cstate);
+       		successor_state3.coins -=3;
+       		successors.add(successor_state3);
+       		
+       		return successors;
+       	}
+
+       	  	if (cstate.coins == 8) {
+       		StateNim successor_state3;
+       		successor_state3 = new StateNim(cstate);
+       		successor_state3.coins -=3;
+       		successors.add(successor_state3);
+       		
+       		return successors;
+       	}
+
+
+       	if (cstate.coins == 7) {
+          	StateNim successor_state2;
+       		successor_state2 = new StateNim(cstate);
+       		successor_state2.coins -=2;
+       		successors.add(successor_state2);      		
+       		return successors;
+       	}
+
+       	if (cstate.coins == 6) {
+          	successor_state.coins-=1;
+          	successors.add(successor_state);       		
+       		return successors;
+       	}
+       
+       	if (cstate.coins == 5) { //loss
+          	successor_state.coins-=1;
+          	successors.add(successor_state);       		
+       		return successors;
+       	}
+
+       	  if (cstate.coins == 4) { 
        		StateNim successor_state3;
        		successor_state3 = new StateNim(cstate);
        		successor_state3.coins -=3;
@@ -81,10 +120,11 @@ public class GameNim extends Game {
        			return successors;
        	}
 
+  
         return successors;
     }	
 
-  	// again, meaningless. 
+  	// again, meaning
     public double eval(State state) {   
     	if(isWinState(state)) {
     		
@@ -115,6 +155,16 @@ public class GameNim extends Game {
 	        	StateNim nextState = null;
 	        	
 	            switch ( game.currentState.player ) {
+	           
+	           	  case 0: //Computer
+	            	  
+	              	nextState = new StateNim((StateNim)game.currentState);
+	        		nextState = (StateNim)search.bestSuccessorState(depth);
+	        		nextState.player = 0;
+	        		System.out.println("Computer: \n" + nextState);
+	                break;
+
+
 	              case 1: //Human
 	                  
 	            	  //get human's move
@@ -129,32 +179,15 @@ public class GameNim extends Game {
 	                  	pos = 1;
 	                  }
 
-	                  nextState = new StateNim((StateNim)game.currentState);
+	                  nextState = (StateNim)game.currentState;
 	                  nextState.player = 1;
 	        			
-
-	                 // for (int i = nextState.coins-1; i >= nextState.coins-1 -pos; i--) {
-	                 // 		nextState.mainStackBK[i] = "";
-	                 // }
-
-	                
-	                  	nextState.coins -= pos;
-	                 
-
-	        //			for (int i = 0; i < pos; i++) {
-	        //				nextState.mainStack.pop();
-	        //			}
-	        			
+	                  nextState.coins -= pos;
 
 	                  System.out.println("Human: \n" + nextState);
 	                  break;
 	                  
-	              case 0: //Computer
-	            	  
-	            	  nextState = (StateNim)search.bestSuccessorState(depth);
-	            	  nextState.player = 0;
-	            	  System.out.println("Computer: \n" + nextState);
-	                  break;
+	          
 	            }
 	                        
 	            game.currentState = nextState;
