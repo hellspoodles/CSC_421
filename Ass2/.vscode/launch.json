@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - CSPHouses",
+            "request": "launch",
+            "mainClass": "CSPHouses"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - CSPGraphColoring",
+            "request": "launch",
+            "mainClass": "CSPGraphColoring"
+        }
+    ]
+}
